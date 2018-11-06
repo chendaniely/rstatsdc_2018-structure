@@ -12,7 +12,7 @@ output:
 
 <style>
 div.hello {
-    font-size: 400px;
+    font-size: 600px;
 }
 
 div.demo {
@@ -24,7 +24,6 @@ div.demo {
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-#
 
 <center>
 <div class="hello">hi!</div>
@@ -244,8 +243,6 @@ raw
 
 ---
 
-#
-
 <center>
 <div class="demo">Demo 01</div>
 </center>
@@ -311,8 +308,6 @@ TRUE
 2. Terminal: `Rscript myscript.R`
 
 ---
-
-#
 
 <center>
 <div class="demo">Demo 02</div>
