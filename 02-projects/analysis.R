@@ -5,7 +5,7 @@ library(lubridate)
 library(ggplot2)
 
 # set working directory -----
-setwd('~/git/hub/rstatsdc_2018-structure/01-just_starting_out/') # linux
+#setwd('~/git/hub/rstatsdc_2018-structure/01-just_starting_out/') # linux
 
 # clean  -----
 

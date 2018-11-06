@@ -5,9 +5,9 @@ library(tidyr)
 library(lubridate)
 library(ggplot2)
 
-# setwd
-
-setwd('~/git/hub/rstatsdc_2018-structure/01-just_starting_out/')
+# set working directory -----
+# do not need this anymore becuase of project
+# setwd('~/git/hub/rstatsdc_2018-structure/01-just_starting_out/') # linux
 
 # clean -----
 
@@ -54,3 +54,4 @@ setwd('~/git/hub/rstatsdc_2018-structure/01-just_starting_out/')
     dplyr::left_join(song, by = c( 'artist', 'time', 'track')) %>%
     dplyr::select(id, date, week, rank)
 )
+

@@ -1,3 +1,14 @@
+*.jpeg
+*.jpg
+*.png
+
+!figs/*
+
+*.csv
+*.html
+
+slides_files/
+
 # History files
 .Rhistory
 .Rapp.history

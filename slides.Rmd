@@ -1,0 +1,432 @@
+---
+title: "Structuring Your (Data Science/Analysis) Projects"
+subtitle: "https://github.com/chendaniely/rstatsdc_2018-structure"
+author: Daniel Chen (@chendaniely)
+output:
+  xaringan::moon_reader:
+    nature:
+      highlightLines: true
+      ratio: '16:9'
+      highlightLanguage: R
+---
+
+<style>
+div.hello {
+    font-size: 400px;
+}
+
+div.demo {
+    font-size: 200px;
+}
+</style>
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#
+
+<center>
+<div class="hello">hi!</div>
+</center>
+
+---
+
+# I'm Daniel
+.pull-left[
+<img src='./figs/daniel_square-800x800.jpg'></img>
+]
+
+.pull-right[
+- PhD Student: Virginia Tech
+- Data Enginner: University of Virginia
+- Instructor: DataCamp, The Carpentries
+- Data Scientist: Lander Analytics
+- Member: Meetup (DataCommunity DC)
+- Author:
+
+<center>
+<img src='./figs/book.jpg' style="width:200px;"></img>
+</center>
+]
+---
+
+# #rstatsnyc
+
+.pull-left[
+<center>
+<b>2015</b>
+<img src='./figs/rstats_2015.png'></img>
+</center>
+]
+
+.pull-right[
+<center>
+<b>2016</b>
+<img src='./figs/rstats_2016.png'></img>
+</center>
+]
+
+---
+
+# #rstatsnyc
+
+.pull-left[
+<center>
+<b>2017</b>
+<img src='./figs/rstats_2017.png'></img>
+</center>
+]
+
+.pull-right[
+<center>
+<b>2018</b>
+<img src='./figs/rstats_2018.png'></img>
+</center>
+]
+
+---
+
+# What do these talks have in common?
+
+How I do my work.
+
+What I teach my students (and you)!
+
+Working together with multiple people.
+
+Being confident that things are "correct".
+
+---
+
+# Structuring Your Data Science Projects
+
+We are happy when our code just runs
+
+R has given us the tools to make your projects more structured and organized
+
+Many people converge on very similar project templates
+
+It doesn't matter where you are in your learning path
+
+## tl;dr
+
+> I just want stuff to run the first time around
+
+---
+
+# Tidy Data Paper -- Billboard Dataset
+
+- Tidy data paper
+- Billboard dataset
+- Github repository has "original" and "cleaned" data
+
+---
+
+# A Tale of Two Dialects
+
+.pull-left[
+<center>
+<img src='./figs/logo_r.jpeg' height='300px'></img>
+</center>
+]
+
+.pull-right[
+<center>
+<img src='./figs/logo_tidyverse.png' height='300px'></img>
+</center>
+]
+
+---
+
+# Clean Data (Original)
+
+```{r, eval=FALSE}
+library(stringr)
+library(plyr)
+
+rm(list = ls()) #<<
+setwd('~/git/hub/rstatsdc_2018-structure/01-just_starting_out/') #<<
+
+raw <- read.csv("billboard.csv")
+
+raw <- raw[, c("year", "artist.inverted", "track", "time", "date.entered", "x1st.week", #<<
+               "x2nd.week", "x3rd.week", "x4th.week", "x5th.week", "x6th.week", "x7th.week", "x8th.week", "x9th.week", "x10th.week", "x11th.week", "x12th.week", "x13th.week", "x14th.week", "x15th.week", "x16th.week", "x17th.week", "x18th.week", "x19th.week", "x20th.week", "x21st.week", "x22nd.week", "x23rd.week", "x24th.week", "x25th.week", "x26th.week", "x27th.week", "x28th.week", "x29th.week", "x30th.week", "x31st.week", "x32nd.week", "x33rd.week", "x34th.week", "x35th.week", "x36th.week", "x37th.week", "x38th.week", "x39th.week", "x40th.week", "x41st.week", "x42nd.week", "x43rd.week", "x44th.week", "x45th.week", "x46th.week", "x47th.week", "x48th.week", "x49th.week", "x50th.week", "x51st.week", "x52nd.week", "x53rd.week", "x54th.week", "x55th.week", "x56th.week", "x57th.week", "x58th.week", "x59th.week", "x60th.week", "x61st.week", "x62nd.week", "x63rd.week", "x64th.week", "x65th.week", "x66th.week", "x67th.week", "x68th.week", "x69th.week", "x70th.week", "x71st.week", "x72nd.week", "x73rd.week", "x74th.week", "x75th.week", #<<
+               "x76th.week")] #<<
+names(raw)[2] <- "artist"
+
+raw$artist <- iconv(raw$artist, "MAC", "ASCII//translit")
+raw$track <- stringr::str_replace(raw$track, " \\(.*?\\)", "")
+names(raw)[-(1:5)] <- str_c("wk", 1:76)
+raw <- plyr::arrange(raw, year, artist, track)
+
+long_name <- nchar(raw$track) > 20
+raw$track[long_name] <- paste0(substr(raw$track[long_name], 0, 20), "...")
+```
+
+---
+
+# Clean Data
+
+```{r, echo=FALSE, message=FALSE}
+library(stringr)
+library(plyr)
+
+raw <- read.csv("./01-just_starting_out/billboard.csv")
+
+raw <- raw[, c("year", "artist.inverted", "track", "time", "date.entered", "x1st.week", #<<
+               "x2nd.week", "x3rd.week", "x4th.week", "x5th.week", "x6th.week", "x7th.week", "x8th.week", "x9th.week", "x10th.week", "x11th.week", "x12th.week", "x13th.week", "x14th.week", "x15th.week", "x16th.week", "x17th.week", "x18th.week", "x19th.week", "x20th.week", "x21st.week", "x22nd.week", "x23rd.week", "x24th.week", "x25th.week", "x26th.week", "x27th.week", "x28th.week", "x29th.week", "x30th.week", "x31st.week", "x32nd.week", "x33rd.week", "x34th.week", "x35th.week", "x36th.week", "x37th.week", "x38th.week", "x39th.week", "x40th.week", "x41st.week", "x42nd.week", "x43rd.week", "x44th.week", "x45th.week", "x46th.week", "x47th.week", "x48th.week", "x49th.week", "x50th.week", "x51st.week", "x52nd.week", "x53rd.week", "x54th.week", "x55th.week", "x56th.week", "x57th.week", "x58th.week", "x59th.week", "x60th.week", "x61st.week", "x62nd.week", "x63rd.week", "x64th.week", "x65th.week", "x66th.week", "x67th.week", "x68th.week", "x69th.week", "x70th.week", "x71st.week", "x72nd.week", "x73rd.week", "x74th.week", "x75th.week", #<<
+               "x76th.week")] #<<
+names(raw)[2] <- "artist"
+
+raw$artist <- iconv(raw$artist, "MAC", "ASCII//translit")
+raw$track <- stringr::str_replace(raw$track, " \\(.*?\\)", "")
+names(raw)[-(1:5)] <- str_c("wk", 1:76)
+raw <- plyr::arrange(raw, year, artist, track)
+
+long_name <- nchar(raw$track) > 20
+raw$track[long_name] <- paste0(substr(raw$track[long_name], 0, 20), "...")
+head(raw)
+```
+
+---
+
+# Clean Data (Tidyverse)
+
+```{r, eval=FALSE}
+library(readr)
+library(dplyr)
+library(stringr)
+
+rm(list = ls()) #<<
+setwd('~/git/hub/rstatsdc_2018-structure/01-just_starting_out/') #<<
+
+(raw <- readr::read_csv('billboard.csv') %>%
+    dplyr::select(year, artist.inverted, track, time, date.entered,
+                  x1st.week:x76th.week) %>% #<<
+    dplyr::rename(artist = artist.inverted) %>%
+    dplyr::mutate(artist = iconv(artist, "MAC", "ASCII//translit")) %>%
+    dplyr::mutate(track = stringr::str_replace(track,  " \\(.*?\\)", "")) %>%
+    dplyr::arrange(year, artist, track) %>%
+    dplyr::mutate(track = dplyr::case_when(
+        nchar(track) > 20 ~ stringr::str_c(stringr::str_sub(track, 0, 20), "..."),
+        TRUE ~ track
+    ))
+)
+(names(raw)[-(1:5)] <- str_c("wk", 1:76)) # changed the order here #<<
+```
+
+---
+
+# Clean Data
+
+```{r, echo=FALSE, message=FALSE}
+library(readr)
+library(dplyr)
+library(stringr)
+
+raw <- readr::read_csv('./01-just_starting_out/billboard.csv') %>%
+    dplyr::select(year, artist.inverted, track, time, date.entered,
+                  x1st.week:x76th.week) %>%
+    dplyr::rename(artist = artist.inverted) %>%
+    dplyr::mutate(artist = iconv(artist, "MAC", "ASCII//translit")) %>%
+    dplyr::mutate(track = stringr::str_replace(track,  " \\(.*?\\)", "")) %>%
+    dplyr::arrange(year, artist, track) %>%
+    dplyr::mutate(track = dplyr::case_when(
+        nchar(track) > 20 ~ stringr::str_c(stringr::str_sub(track, 0, 20), "..."),
+        TRUE ~ track
+    ))
+
+# anyone know how to add this to the pipeline?
+names(raw)[-(1:5)] <- str_c("wk", 1:76) # changed the order here
+raw
+```
+
+---
+
+#
+
+<center>
+<div class="demo">Demo 01</div>
+</center>
+
+---
+
+# Do you want your computer set on fire...?
+... because that's how you get your computer set on fire.
+
+<center>
+<img src='./figs/twitter_projects_here_hadley_jenny.png'></img>
+</center>
+
+---
+
+# What's wrong with `setwd()`?
+
+- **You are assuming a folder structure**
+    - Your collaborator might not have the same structure
+    - Your other computer might not have the same structure
+    - You want to move files and folders around and now... you guessed it, don't have the same structure!
+
+- You end up having a different line in your code for every possible location and commenting it in and out
+    - Annoying for yourself, others, and
+    - Version control systems
+
+---
+
+# Make a Project
+
+<center>
+<img src='./figs/rstudio-new_project.png'></img>
+</center>
+
+```{bash}
+diff -r 01-just_starting_out 02-projects | grep "Only in 02-projects"
+```
+
+---
+
+# RStudio projects assume everyone is using RStudio
+
+```{r}
+TRUE
+```
+
+#### but...
+
+- Emacs ESS allows you to pick the working directory
+- `cd` in linux changes the working directory
+    - Run code from working directory
+
+---
+
+# What's wrong with `rm(list = ls())`?
+
+- **It doesn't detatch libraries**
+    - You might end up using a function without an explicit `library` call in your script
+
+## What do I do instead?
+
+1. RStudio: Session > Restart R (Ctrl + Shift + F10)
+2. Terminal: `Rscript myscript.R`
+
+---
+
+#
+
+<center>
+<div class="demo">Demo 02</div>
+</center>
+
+
+---
+
+# Am I done yet? Yes, but...
+
+<center>
+<img src='./figs/rstudio-many_files.png' width='650px'></img>
+
+---
+
+# `project += structure`
+
+Yes this is the whole point of this talk...
+
+<center>
+<img src='./figs/noble-2009.png'></img>
+</center>
+
+---
+
+# Noble's recommendations
+
+<center>
+<img src='./figs/noble_dir_structure.png'></img>
+</center>
+
+---
+
+# What I/we do
+
+<center>
+<img src='./figs/sdal_project_template.png' height='700px'></img>
+</center>
+
+---
+
+# But basically...
+
+1. **Data** (e.g., `data`)
+    1. `orginal` folder from your original (read-only) data
+    2. `processed` folder that your scripts create
+        - If you want you can break down `processed` to `intermediate` and/or `final`
+        - Do whatever feels right
+    - Create symbolic links (i.e., shortcuts) as needed if you are using a version control system.
+2. **Code** (e.g., `src`, `analysis`)
+    - Same thing as the data folder: create subfolders as necessary
+3. **Output** (e.g., `output`, `plots`, `results`)<sup>1</sup>
+    1. Things your script outputs that is not a dataset
+    2. `git` does not track empty folders, so put in a `README.md` or `.gitkeep` file
+4. **Functions** (e.g., `R`)
+
+Make sub-folders as needed, everything is in a project and/or has a fixed working directory.
+
+.footnote[[1] Can get weird in `git` with image conflicts. But works great on shared drives/dropbox!]
+
+---
+
+<center>
+<div class="demo">Demo 03</div>
+</center>
+
+---
+
+# Can we do better?
+
+#### How long is my script?
+
+```{bash}
+wc 01-just_starting_out/analysis.R
+```
+
+#### What does my script do?
+
+1. Loads
+2. Cleans
+3. Tidy
+4. Normalize
+5. EDA
+6. Model
+
+---
+
+# Split it up into separate scripts ... in a subfolder
+
+.pull-left[
+1. Loads
+2. Cleans
+3. Tidy
+4. Normalize
+5. EDA
+6. Model
+]
+
+.pull-right[
+1. `01-load.R`
+2. `02-01-clean.R`
+3. `02-02-tidy.R`
+4. `02-03-normalize.R`
+5. `03-eda.R`
+6. `04-model.R`
+]
+---
+
+# Resources
+
+- slide template: xaringan
+
+---
+
+# Thanks!
+
+---
