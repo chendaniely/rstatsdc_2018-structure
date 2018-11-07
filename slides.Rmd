@@ -363,6 +363,7 @@ Yes this is the whole point of this talk...
     1. Things your script outputs that is not a dataset
     2. `git` does not track empty folders, so put in a `README.md` or `.gitkeep` file
 4. **Functions** (e.g., `R`)
+5. **README** files
 
 Make sub-folders as needed, everything is in a project and/or has a fixed working directory.
 
@@ -376,7 +377,7 @@ Make sub-folders as needed, everything is in a project and/or has a fixed workin
 
 ---
 
-# Can we do better?
+# Can we do better? Of course.
 
 #### How long is my script?
 
@@ -414,14 +415,111 @@ wc 01-just_starting_out/analysis.R
 5. `03-eda.R`
 6. `04-model.R`
 ]
+
+Be sensible, a 2 line script is probably not worth it, but a 2000 line script is unwieldy.
+
 ---
 
-# Resources
+<center>
+<div class="demo">Demo 04</div>
+</center>
+
+---
+
+# What else?
+
+Rachael Tatman (from Kaggle) @rctatman
+
+- R-Ladies organizer (Seattle chapter)
+- Data scientist at Kaggle
+- RLadies DC Meetup: Put together a data science portfolio
+    - http://www.rctatman.com/files/Tatman_2018_DataSciencePortfolios_DC.pdf
+
+---
+
+<center>
+<img src='figs/rctatman-show.png'></img>
+</center>
+
+---
+
+<center>
+<img src='figs/rctatman-noshow.png'></img>
+</center>
+
+---
+
+# Knitr
+
+.pull-left[
+1. Loads
+2. Cleans
+3. Tidy
+4. Normalize
+5. EDA
+6. Model
+]
+
+.pull-right[
+1. `01-load.R`
+2. `02-01-clean.R`
+3. `02-02-tidy.R`
+4. `02-03-normalize.R`
+5. `03-eda.Rmd`
+6. `04-model.Rmd`
+]
+
+---
+
+# But...
+
+Sometimes working with knitr in RStudio projects get weird because of working directories
+
+## Fix this with the `here` [package](https://here.r-lib.org/)
+
+- It's based off [rprojroot](https://rprojroot.r-lib.org/)
+
+In `here::here()`:
+- Is a file named .here present?
+- Is this an RStudio Project? Literally, can I find a file named something like foo.Rproj?
+- Is this an R package? Does it have a DESCRIPTION file?
+- Is this a remake project? Does it have a file named remake.yml?
+- Is this a projectile project? Does it have a file named .projectile?
+- Is this a checkout from a version control system? Does it have a directory named .git or .svn? - Currently, only Git and Subversion are supported.
+
+---
+
+<center>
+<div class="demo">Demo 05</div>
+</center>
+
+---
+
+
+
+---
+
+# In Sum...
+
+1. Use R
+2. Make a project
+3. Organize the project into folders
+4. Break up scripts into smaller pieces
+5. Use `here::here()` in knitr documents
+
+---
+
+# (More) Resources
 
 - slide template: xaringan
-
+- [Jenny Bryan - Stop working directory insanity](https://gist.github.com/jennybc/362f52446fe1ebc4c49f)
+- [Jenny Bryan - Naming things](https://speakerdeck.com/jennybc/how-to-name-files)
+- [John Myles White - ProjectTemplate](http://projecttemplate.net/)
+- [John Blischak - workflowr: organized + reproducible + shareable data science in R](https://jdblischak.github.io/workflowr/)
 ---
 
 # Thanks!
 
----
+github/twitter/gmail/instagram: `@chendaniely`
+
+Slides/code/repo: https://github.com/chendaniely/rstatsdc_2018-structure
