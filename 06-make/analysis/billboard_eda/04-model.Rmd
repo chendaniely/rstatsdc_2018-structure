@@ -1,0 +1,117 @@
+---
+title: "Model Exploration"
+author: "Daniel Chen"
+date: ""
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r, eval=FALSE, echo=FALSE}
+rmarkdown::render(here::here('./analysis/billboard_eda/04-model.Rmd'),
+                  output_dir = './output/billboard_reports')
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE,
+                      fig.height = 5,
+                      fig.width = 8)
+
+library(readr)
+library(broom)
+library(ggplot2)
+library(forcats)
+library(dplyr)
+library(here)
+
+clean_out <- read_csv(here('./data/processed/billboard/billboard_tidy.csv'))
+```
+
+# Univariate
+
+```{r}
+fit <- lm(rank ~ week, data = clean_out)
+(coefs <- tidy(fit))
+
+
+ggplot(coefs, aes(x = estimate, y = term)) +
+    geom_point() +
+    geom_errorbarh(aes(xmin = std.error - (1.96 * estimate),
+                       xmax = std.error + (1.96 * estimate))) +
+    theme_minimal()
+ggsave(here('./output/billboard_model_plots/coefs_predict_rank_week.png'),
+       width = 8, height = 5, units = 'in')
+```
+
+
+```{r}
+ggplot(coefs[!coefs$term %in% c('(Intercept)'), ], aes(x = estimate, y = term)) +
+    geom_point() +
+    geom_errorbarh(aes(xmin = std.error - (1.96 * estimate),
+                       xmax = std.error + (1.96 * estimate))) +
+    theme_minimal()
+ggsave(here('./output/billboard_model_plots/coefs_predict_rank_week_no_intercept.png'),
+       width = 8, height = 5, units = 'in')
+
+```
+
+# Multiple
+
+```{r}
+fit <- lm(rank ~ week + artist, data = clean_out)
+(coefs <- tidy(fit))
+
+ggplot(coefs, aes(x = estimate,
+                  y = term)) +
+    geom_point() +
+    geom_errorbarh(aes(xmin = std.error - (1.96 * estimate),
+                       xmax = std.error + (1.96 * estimate))) +
+    theme_minimal()
+ggsave(here('./output/billboard_model_plots/coefs_predict_rank_week_artist.png'),
+       width = 8, height = 5, units = 'in')
+```
+
+```{r}
+ggplot(coefs[!coefs$term %in% c('(Intercept)'), ],
+       aes(x = estimate,
+           y = fct_reorder(term, estimate))) +
+    geom_point() +
+    theme_minimal()
+ggsave(here('./output/billboard_model_plots/coefs_predict_rank_week_artist_sorted.png'),
+       width = 8, height = 5, units = 'in')
+```
+
+# Doing well
+
+Who are the artists who are doing the best?
+
+```{r}
+(pos <- coefs %>%
+        filter(estimate > 0) %>%
+        arrange(-estimate, std.error)
+)
+pos$term
+```
+
+# Doing poorly
+
+Who are the artists who are doing the worst
+
+```{r}
+(neg <- coefs %>%
+        filter(estimate < 0) %>%
+        arrange(estimate, std.error)
+)
+head(neg$term, 10)
+```
+
+# Significant
+
+```{r}
+(coefs %>% filter(p.value <= .05) %>%
+        arrange(p.value, estimate)
+)
+
+(pos %>% filter(p.value <= .05)
+)
+```

@@ -1,0 +1,50 @@
+\documentclass[10pt,letterpaper]{article}
+
+\usepackage{graphicx}
+\usepackage{float} % for H
+\usepackage[margin=0.7in]{geometry}
+\author{Daniel Chen}
+\title{Scholarship with Analysis Templates}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+Billboards dataset from raw to tidy to EDA.
+Data in its orginal form was in ``long'' format with a song on each row and a separate column
+for the ranking from week 1 to week 72.
+We ``tidied'' the data so it follows Hadley Wickham's tidy data principles.
+
+Figure \ref{fig:avgrankbyweekacrossmonths} shows the average rating of songs
+over the year with a different line drawn depending on which month the song was initially released.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.7\linewidth]{../06-make/output/billboard_rank_plots/avg_rank_by_week_across_months}
+    \caption[]{Average ratings over time by different starting months}
+    \label{fig:avgrankbyweekacrossmonths}
+\end{figure}
+
+Figure \ref{fig:coefspredictrankweeknointercept} shows the point estimate and 95\% confidence interval looking at the rank of a song in the year 2000 as the weeks go by.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\linewidth]{../06-make/output/billboard_model_plots/coefs_predict_rank_week_no_intercept}
+    \caption[]{How the rank of a song changes weekly}
+    \label{fig:coefspredictrankweeknointercept}
+\end{figure}
+
+In figure \ref{fig:coefspredictrankweekartistsorted} we see that Missy Elliott isn't doing so great.
+Sad.
+But this analysis is a bit nonsensical anyway.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\linewidth]{../06-make/output/billboard_model_plots/coefs_predict_rank_week_artist_sorted}
+    \caption{Ranks of songs by artist and week}
+    \label{fig:coefspredictrankweekartistsorted}
+\end{figure}
+
+
+\end{document}

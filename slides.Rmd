@@ -42,12 +42,17 @@ knitr::opts_chunk$set(echo = TRUE)
 - Instructor: DataCamp, The Carpentries
 - Data Scientist: Lander Analytics
 - Member: Meetup (DataCommunity DC)
+- Event Photographer
+- SCUBA Diver (Cavern, Divemaster)
+- Snowboarder
 - Author:
 
 <center>
 <img src='./figs/book.jpg' style="width:200px;"></img>
 </center>
 ]
+
+
 ---
 
 # #rstatsnyc
@@ -473,7 +478,8 @@ Rachael Tatman (from Kaggle) @rctatman
 
 # But...
 
-Sometimes working with knitr in RStudio projects get weird because of working directories
+- Sometimes working with knitr in RStudio projects get weird because of working directories <sub>[1]</sub>
+- I won't work in RStudio
 
 ## Fix this with the `here` [package](https://here.r-lib.org/)
 
@@ -487,6 +493,7 @@ In `here::here()`:
 - Is this a projectile project? Does it have a file named .projectile?
 - Is this a checkout from a version control system? Does it have a directory named .git or .svn? - Currently, only Git and Subversion are supported.
 
+.footnote[[1] Also loses file tab completion within `Rmd` document. Worth?]
 ---
 
 <center>
@@ -495,23 +502,122 @@ In `here::here()`:
 
 ---
 
+# Functions
 
+Not shown in this example
+
+#### But...
+
+1. Put them in an `R` folder for easy reference and `source`ing.
+2. Get's the analysis project ready to turn into an R package
 
 ---
 
-# In Sum...
+# What about scholarship/formal reports (LaTeX)?
+
+1. Sibbling project
+
+```{bash, eval=FALSE}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.7\linewidth]{../06-make/output/billboard_rank_plots/avg_rank_by_week_across_months}
+    \caption[]{Average ratings over time by different starting months}
+    \label{fig:avgrankbyweekacrossmonths}
+\end{figure}
+```
+2. Child project (git submodules?)
+  - Symbolic links (i.e., shortcuts) could work too
+```{bash, eval=FALSE}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.7\linewidth]{./06-make/output/billboard_rank_plots/avg_rank_by_week_across_months}
+    \caption[]{Average ratings over time by different starting months}
+    \label{fig:avgrankbyweekacrossmonths}
+\end{figure}
+```
+
+---
+
+# `knitr` button puts output in the source file location
+
+The output document is put in the `analysis` folder.
+I want it in the `output` folder!
+
+#### Solution
+
+use `rmarkdown::render()`
+
+```{r, eval=FALSE}
+# not executed during build
+rmarkdown::render(here::here('./analysis/billboard_eda/03-eda.Rmd'),
+                  output_dir = './output/billboard_reports') #<<
+```
+
+---
+
+# Too many commands to run!
+
+1. Shell Script
+2. Make
+3. RStudio > Build (?)
+---
+
+# Makefile
+
+```make
+BILLBOARD=./analysis/billboard_eda/
+
+all : commands
+
+## commands      : show all commands.
+commands :
+	@grep -E '^##' Makefile | sed -e 's/## //g'
+
+## billboard_eda  : re-generate billboard eda analsyis
+billboard_eda :
+	Rscript ${BILLBOARD}/01*
+	Rscript ${BILLBOARD}/02-01*
+	Rscript ${BILLBOARD}/02-02*
+	Rscript ${BILLBOARD}/02-03*
+	Rscript -e "rmarkdown::render(here::here('./analysis/billboard_eda/03-eda.Rmd'), output_dir = './output/billboard_reports')"
+	Rscript -e "rmarkdown::render(here::here('./analysis/billboard_eda/04-model.Rmd'), output_dir = './output/billboard_reports')"
+
+## clean         : clean up junk files.
+clean :
+	find data/ -type f -name '*.csv' | xargs rm
+	find analysis/ type f -name '*.html' | xargs rm
+```
+
+---
+
+<center>
+<div class="demo">Demo 06</div>
+</center>
+
+---
+
+.pull-left[
+# In sum...
 
 1. Use R
 2. Make a project
-3. Organize the project into folders
+3. Organize the project into folders and use `here::here()` to get project relative paths
 4. Break up scripts into smaller pieces
-5. Use `here::here()` in knitr documents
+5. RMarkdown for things you want to show
+6. Write `Makefiles`, shell scripts, or other build scripts and link your projects to scholarship so your figures and tables are always up to date
+]
+
+.pull-right[
+<center>
+<img src='figs/expanding_brain.png' height='650px'></img>
+</center>
+]
 
 ---
 
 # (More) Resources
 
-- slide template: xaringan
+- slide template: xaringan (remark.js)
 - [Jenny Bryan - Stop working directory insanity](https://gist.github.com/jennybc/362f52446fe1ebc4c49f)
 - [Jenny Bryan - Naming things](https://speakerdeck.com/jennybc/how-to-name-files)
 - [John Myles White - ProjectTemplate](http://projecttemplate.net/)
