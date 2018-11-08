@@ -520,19 +520,20 @@ Not shown in this example
 ```{bash, eval=FALSE}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=.7\linewidth]{../06-make/output/billboard_rank_plots/avg_rank_by_week_across_months}
-    \caption[]{Average ratings over time by different starting months}
-    \label{fig:avgrankbyweekacrossmonths}
+    \includegraphics[width=.7\linewidth]{../06-make/output/billboard_rank_plots/avg_rank_by_week_across_months} #<<
 \end{figure}
 ```
 2. Child project (git submodules?)
   - Symbolic links (i.e., shortcuts) could work too
+
+```bash
+ln -s ~/git/hub/rstatsdc_2018-structure/06-make .
+```
+
 ```{bash, eval=FALSE}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=.7\linewidth]{./06-make/output/billboard_rank_plots/avg_rank_by_week_across_months}
-    \caption[]{Average ratings over time by different starting months}
-    \label{fig:avgrankbyweekacrossmonths}
+    \includegraphics[width=.7\linewidth]{./06-make/output/billboard_rank_plots/avg_rank_by_week_across_months} #<<
 \end{figure}
 ```
 
@@ -584,7 +585,7 @@ billboard_eda :
 
 ## clean         : clean up junk files.
 clean :
-	find data/ -type f -name '*.csv' | xargs rm
+	find data/processed/ -type f -name '*.csv' | xargs rm
 	find analysis/ type f -name '*.html' | xargs rm
 ```
 
@@ -604,7 +605,7 @@ clean :
 3. Organize the project into folders and use `here::here()` to get project relative paths
 4. Break up scripts into smaller pieces
 5. RMarkdown for things you want to show
-6. Write `Makefiles`, shell scripts, or other build scripts and link your projects to scholarship so your figures and tables are always up to date
+6. Put functions in `R` so your analysis is package ready and write `Makefiles`, shell scripts, or other build scripts and link your projects to scholarship so your figures and tables are always up to date
 ]
 
 .pull-right[

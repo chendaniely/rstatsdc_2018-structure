@@ -17,5 +17,5 @@ billboard_eda :
 
 ## clean         : clean up junk files.
 clean :
-	find data/ -type f -name '*.csv' | xargs rm
+	find data/processed/ -type f -name '*.csv' | xargs rm
 	find analysis/ type f -name '*.html' | xargs rm
