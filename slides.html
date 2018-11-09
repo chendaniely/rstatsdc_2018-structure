@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Structuring Your (Data Science/Analysis) Projects</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Daniel Chen (@chendaniely)" />
+    <link href="slides_files/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="slides_files/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Structuring Your (Data Science/Analysis) Projects
+## <a href="https://github.com/chendaniely/rstatsdc_2018-structure" class="uri">https://github.com/chendaniely/rstatsdc_2018-structure</a>
+### Daniel Chen (<span class="citation">@chendaniely</span>)
+
+---
+
+
+&lt;style&gt;
+div.hello {
+    font-size: 600px;
+}
+
+div.demo {
+    font-size: 200px;
+}
+
+div.halfLink {
+    font-size: 18px;
+}
+&lt;/style&gt;
+
+
+
+
+&lt;center&gt;
+&lt;div class="hello"&gt;hi!&lt;/div&gt;
+&lt;/center&gt;
+
+---
+
+# I'm Daniel
+.pull-left[
+&lt;img src='./figs/daniel_square-800x800.jpg'&gt;&lt;/img&gt;
+]
+
+.pull-right[
+- PhD Student: Virginia Tech
+- Data Enginner: University of Virginia
+- Instructor: DataCamp, The Carpentries
+- Data Scientist: Lander Analytics
+- Member: Meetup (DataCommunity DC)
+- Event Photographer
+- SCUBA Diver (Cavern, Divemaster)
+- Snowboarder
+- Author:
+
+&lt;center&gt;
+&lt;img src='./figs/book.jpg' style="width:200px;"&gt;&lt;/img&gt;
+&lt;/center&gt;
+]
+
+
+---
+
+# #rstatsnyc
+
+.pull-left[
+&lt;center&gt;
+&lt;a href='https://www.youtube.com/watch?v=oPCIqDagGSk'&gt;
+&lt;b&gt;2015&lt;/b&gt;
+&lt;img src='./figs/rstats_2015.png'&gt;&lt;/img&gt;
+&lt;/a&gt;
+&lt;/center&gt;
+]
+
+.pull-right[
+&lt;center&gt;
+&lt;a href='https://www.youtube.com/watch?v=CAy0udiWwmg')
+&lt;b&gt;2016&lt;/b&gt;
+&lt;img src='./figs/rstats_2016.png'&gt;&lt;/img&gt;
+&lt;/a&gt;
+&lt;/center&gt;
+]
+
+---
+
+# #rstatsnyc
+
+.pull-left[
+&lt;center&gt;
+&lt;a href='https://www.youtube.com/watch?v=CAy0udiWwmg'&gt;
+&lt;b&gt;2017&lt;/b&gt;
+&lt;img src='./figs/rstats_2017.png'&gt;&lt;/img&gt;
+&lt;/a&gt;
+&lt;/center&gt;
+]
+
+.pull-right[
+&lt;center&gt;
+&lt;a href='https://www.youtube.com/watch?v=6VO_CTtGlnk'&gt;
+&lt;b&gt;2018&lt;/b&gt;
+&lt;img src='./figs/rstats_2018.png'&gt;&lt;/img&gt;
+&lt;/a&gt;
+&lt;/center&gt;
+]
+
+---
+
+# What do these talks have in common?
+
+How I do my work.
+
+What I teach my students (and you)!
+
+Working together with multiple people.
+
+Being confident that things are "correct".
+
+---
+
+# Structuring Your Data Science Projects
+
+We are happy when our code just runs
+
+R has given us the tools to make your projects more structured and organized
+
+Many people converge on very similar project templates
+
+It doesn't matter where you are in your learning path
+
+## tl;dr
+
+&gt; I just want stuff to run the first time around
+
+---
+
+# Tidy Data Paper -- Billboard Dataset
+
+- [Tidy data paper](http://vita.had.co.nz/papers/tidy-data.html)
+- Billboard dataset
+- [Github repository](https://github.com/hadley/tidy-data/tree/master/data) has "original" and "cleaned" data
+
+---
+
+# A Tale of Two Dialects
+
+.pull-left[
+&lt;center&gt;
+&lt;img src='./figs/logo_r.jpeg' height='300px'&gt;&lt;/img&gt;
+&lt;/center&gt;
+]
+
+.pull-right[
+&lt;center&gt;
+&lt;img src='./figs/logo_tidyverse.png' height='300px'&gt;&lt;/img&gt;
+&lt;/center&gt;
+]
+
+---
+
+# Clean Data (Original)
+
+
+```r
+library(stringr)
+library(plyr)
+
+*rm(list = ls())
+*setwd('~/git/hub/rstatsdc_2018-structure/01-just_starting_out/')
+
+raw &lt;- read.csv("billboard.csv")
+
+*raw &lt;- raw[, c("year", "artist.inverted", "track", "time", "date.entered", "x1st.week",
+*              "x2nd.week", "x3rd.week", "x4th.week", "x5th.week", "x6th.week", "x7th.week", "x8th.week", "x9th.week", "x10th.week", "x11th.week", "x12th.week", "x13th.week", "x14th.week", "x15th.week", "x16th.week", "x17th.week", "x18th.week", "x19th.week", "x20th.week", "x21st.week", "x22nd.week", "x23rd.week", "x24th.week", "x25th.week", "x26th.week", "x27th.week", "x28th.week", "x29th.week", "x30th.week", "x31st.week", "x32nd.week", "x33rd.week", "x34th.week", "x35th.week", "x36th.week", "x37th.week", "x38th.week", "x39th.week", "x40th.week", "x41st.week", "x42nd.week", "x43rd.week", "x44th.week", "x45th.week", "x46th.week", "x47th.week", "x48th.week", "x49th.week", "x50th.week", "x51st.week", "x52nd.week", "x53rd.week", "x54th.week", "x55th.week", "x56th.week", "x57th.week", "x58th.week", "x59th.week", "x60th.week", "x61st.week", "x62nd.week", "x63rd.week", "x64th.week", "x65th.week", "x66th.week", "x67th.week", "x68th.week", "x69th.week", "x70th.week", "x71st.week", "x72nd.week", "x73rd.week", "x74th.week", "x75th.week",
+*              "x76th.week")]
+names(raw)[2] &lt;- "artist"
+
+raw$artist &lt;- iconv(raw$artist, "MAC", "ASCII//translit")
+raw$track &lt;- stringr::str_replace(raw$track, " \\(.*?\\)", "")
+names(raw)[-(1:5)] &lt;- str_c("wk", 1:76)
+raw &lt;- plyr::arrange(raw, year, artist, track)
+
+long_name &lt;- nchar(raw$track) &gt; 20
+raw$track[long_name] &lt;- paste0(substr(raw$track[long_name], 0, 20), "...")
+```
+
+---
+
+# Clean Data
+
+
+```
+##   year       artist                   track time date.entered wk1 wk2 wk3
+## 1 2000        2 Pac          Baby Don't Cry 4:22   2000-02-26  87  82  72
+## 2 2000      2Ge+her The Hardest Part Of ... 3:15   2000-09-02  91  87  92
+## 3 2000 3 Doors Down              Kryptonite 3:53   2000-04-08  81  70  68
+## 4 2000 3 Doors Down                   Loser 4:24   2000-10-21  76  76  72
+## 5 2000     504 Boyz           Wobble Wobble 3:35   2000-04-15  57  34  25
+## 6 2000          98? Give Me Just One Nig... 3:24   2000-08-19  51  39  34
+##   wk4 wk5 wk6 wk7 wk8 wk9 wk10 wk11 wk12 wk13 wk14 wk15 wk16 wk17 wk18
+## 1  77  87  94  99  NA  NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+## 2  NA  NA  NA  NA  NA  NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+## 3  67  66  57  54  53  51   51   51   51   47   44   38   28   22   18
+## 4  69  67  65  55  59  62   61   61   59   61   66   72   76   75   67
+## 5  17  17  31  36  49  53   57   64   70   75   76   78   85   92   96
+## 6  26  26  19   2   2   3    6    7   22   29   36   47   67   66   84
+##   wk19 wk20 wk21 wk22 wk23 wk24 wk25 wk26 wk27 wk28 wk29 wk30 wk31 wk32
+## 1   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+## 2   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+## 3   18   14   12    7    6    6    6    5    5    4    4    4    4    3
+## 4   73   70   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+## 5   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+## 6   93   94   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##   wk33 wk34 wk35 wk36 wk37 wk38 wk39 wk40 wk41 wk42 wk43 wk44 wk45 wk46
+## 1   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+## 2   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+## 3    3    3    4    5    5    9    9   15   14   13   14   16   17   21
+## 4   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+## 5   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+## 6   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##   wk47 wk48 wk49 wk50 wk51 wk52 wk53 wk54 wk55 wk56 wk57 wk58 wk59 wk60
+## 1   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+## 2   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+## 3   22   24   28   33   42   42   49   NA   NA   NA   NA   NA   NA   NA
+## 4   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+## 5   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+## 6   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##   wk61 wk62 wk63 wk64 wk65 wk66 wk67 wk68 wk69 wk70 wk71 wk72 wk73 wk74
+## 1   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+## 2   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+## 3   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+## 4   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+## 5   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+## 6   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA   NA
+##   wk75 wk76
+## 1   NA   NA
+## 2   NA   NA
+## 3   NA   NA
+## 4   NA   NA
+## 5   NA   NA
+## 6   NA   NA
+```
+
+---
+
+# Clean Data (Tidyverse)
+
+
+```r
+library(readr)
+library(dplyr)
+library(stringr)
+
+*rm(list = ls())
+*setwd('~/git/hub/rstatsdc_2018-structure/01-just_starting_out/')
+
+(raw &lt;- readr::read_csv('billboard.csv') %&gt;%
+    dplyr::select(year, artist.inverted, track, time, date.entered,
+*                 x1st.week:x76th.week) %&gt;%
+    dplyr::rename(artist = artist.inverted) %&gt;%
+    dplyr::mutate(artist = iconv(artist, "MAC", "ASCII//translit")) %&gt;%
+    dplyr::mutate(track = stringr::str_replace(track,  " \\(.*?\\)", "")) %&gt;%
+    dplyr::arrange(year, artist, track) %&gt;%
+    dplyr::mutate(track = dplyr::case_when(
+        nchar(track) &gt; 20 ~ stringr::str_c(stringr::str_sub(track, 0, 20), "..."),
+        TRUE ~ track
+    ))
+)
+*(names(raw)[-(1:5)] &lt;- str_c("wk", 1:76)) # changed the order here
+```
+
+---
+
+# Clean Data
+
+
+```
+## # A tibble: 317 x 81
+##     year artist track time  date.entered   wk1   wk2   wk3   wk4   wk5
+##    &lt;int&gt; &lt;chr&gt;  &lt;chr&gt; &lt;tim&gt; &lt;date&gt;       &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
+##  1  2000 2 Pac  Baby… 04:22 2000-02-26      87    82    72    77    87
+##  2  2000 2Ge+h… The … 03:15 2000-09-02      91    87    92    NA    NA
+##  3  2000 3 Doo… Kryp… 03:53 2000-04-08      81    70    68    67    66
+##  4  2000 3 Doo… Loser 04:24 2000-10-21      76    76    72    69    67
+##  5  2000 504 B… Wobb… 03:35 2000-04-15      57    34    25    17    17
+##  6  2000 98?    Give… 03:24 2000-08-19      51    39    34    26    26
+##  7  2000 A*Tee… Danc… 03:44 2000-07-08      97    97    96    95   100
+##  8  2000 Aaliy… I Do… 04:15 2000-01-29      84    62    51    41    38
+##  9  2000 Aaliy… Try … 04:03 2000-03-18      59    53    38    28    21
+## 10  2000 Adams… Open… 05:30 2000-08-26      76    76    74    69    68
+## # ... with 307 more rows, and 71 more variables: wk6 &lt;int&gt;, wk7 &lt;int&gt;,
+## #   wk8 &lt;int&gt;, wk9 &lt;int&gt;, wk10 &lt;int&gt;, wk11 &lt;int&gt;, wk12 &lt;int&gt;, wk13 &lt;int&gt;,
+## #   wk14 &lt;int&gt;, wk15 &lt;int&gt;, wk16 &lt;int&gt;, wk17 &lt;int&gt;, wk18 &lt;int&gt;,
+## #   wk19 &lt;int&gt;, wk20 &lt;int&gt;, wk21 &lt;int&gt;, wk22 &lt;int&gt;, wk23 &lt;int&gt;,
+## #   wk24 &lt;int&gt;, wk25 &lt;int&gt;, wk26 &lt;int&gt;, wk27 &lt;int&gt;, wk28 &lt;int&gt;,
+## #   wk29 &lt;int&gt;, wk30 &lt;int&gt;, wk31 &lt;int&gt;, wk32 &lt;int&gt;, wk33 &lt;int&gt;,
+## #   wk34 &lt;int&gt;, wk35 &lt;int&gt;, wk36 &lt;int&gt;, wk37 &lt;int&gt;, wk38 &lt;int&gt;,
+## #   wk39 &lt;int&gt;, wk40 &lt;int&gt;, wk41 &lt;int&gt;, wk42 &lt;int&gt;, wk43 &lt;int&gt;,
+## #   wk44 &lt;int&gt;, wk45 &lt;int&gt;, wk46 &lt;int&gt;, wk47 &lt;int&gt;, wk48 &lt;int&gt;,
+## #   wk49 &lt;int&gt;, wk50 &lt;int&gt;, wk51 &lt;int&gt;, wk52 &lt;int&gt;, wk53 &lt;int&gt;,
+## #   wk54 &lt;int&gt;, wk55 &lt;int&gt;, wk56 &lt;int&gt;, wk57 &lt;int&gt;, wk58 &lt;int&gt;,
+## #   wk59 &lt;int&gt;, wk60 &lt;int&gt;, wk61 &lt;int&gt;, wk62 &lt;int&gt;, wk63 &lt;int&gt;,
+## #   wk64 &lt;int&gt;, wk65 &lt;int&gt;, wk66 &lt;chr&gt;, wk67 &lt;chr&gt;, wk68 &lt;chr&gt;,
+## #   wk69 &lt;chr&gt;, wk70 &lt;chr&gt;, wk71 &lt;chr&gt;, wk72 &lt;chr&gt;, wk73 &lt;chr&gt;,
+## #   wk74 &lt;chr&gt;, wk75 &lt;chr&gt;, wk76 &lt;chr&gt;
+```
+
+---
+
+&lt;center&gt;
+&lt;div class="demo"&gt;Demo 01&lt;/div&gt;
+&lt;/center&gt;
+
+---
+
+# Do you want your computer set on fire...?
+... because that's how you get your computer set on fire.
+
+&lt;center&gt;
+&lt;img src='./figs/twitter_projects_here_hadley_jenny.png'&gt;&lt;/img&gt;
+&lt;/center&gt;
+
+---
+
+# What's wrong with `setwd()`?
+
+- **You are assuming a folder structure**
+    - Your collaborator might not have the same structure
+    - Your other computer might not have the same structure
+    - You want to move files and folders around and now... you guessed it, don't have the same structure!
+
+- You end up having a different line in your code for every possible location and commenting it in and out
+    - Annoying for yourself, others, and
+    - Version control systems
+
+---
+
+# Make a Project
+
+&lt;center&gt;
+&lt;img src='./figs/rstudio-new_project.png'&gt;&lt;/img&gt;
+&lt;/center&gt;
+
+
+```bash
+diff -r 01-just_starting_out 02-projects | grep "Only in 02-projects"
+```
+
+```
+## Only in 02-projects: 02-projects.Rproj
+## Only in 02-projects: .Rproj.user
+```
+
+---
+
+# RStudio projects assume everyone is using RStudio
+
+
+```r
+TRUE
+```
+
+```
+## [1] TRUE
+```
+
+#### but...
+
+- [Emacs ESS](https://ess.r-project.org/) allows you to pick the working directory
+- `cd` in linux changes the working directory
+    - Run code from working directory
+
+---
+
+# What's wrong with `rm(list = ls())`?
+
+- **It doesn't detatch libraries**
+    - You might end up using a function without an explicit `library` call in your script
+
+## What do I do instead?
+
+1. RStudio: Session &gt; Restart R (Ctrl + Shift + F10)
+2. Terminal: `Rscript myscript.R`
+
+---
+
+&lt;center&gt;
+&lt;div class="demo"&gt;Demo 02&lt;/div&gt;
+&lt;/center&gt;
+
+---
+
+# Am I done yet? Yes, but...
+
+&lt;center&gt;
+&lt;img src='./figs/rstudio-many_files.png' width='650px'&gt;&lt;/img&gt;
+
+---
+
+# `project += structure`
+
+Yes this is the whole point of this talk...
+
+&lt;center&gt;
+&lt;img src='./figs/noble-2009.png'&gt;&lt;/img&gt;
+&lt;/center&gt;
+
+---
+
+# Noble's recommendations
+
+&lt;center&gt;
+&lt;img src='./figs/noble_dir_structure.png'&gt;&lt;/img&gt;
+&lt;/center&gt;
+
+---
+
+# What I/we do
+
+&lt;center&gt;
+&lt;img src='./figs/sdal_project_template.png' height='700px'&gt;&lt;/img&gt;
+&lt;/center&gt;
+
+---
+
+# But basically...
+
+1. **Data** (e.g., `data`)
+    1. `orginal` folder from your original (read-only) data
+    2. `processed` folder that your scripts create
+        - If you want you can break down `processed` to `intermediate` and/or `final`
+        - Do whatever feels right
+    - Create symbolic links (i.e., shortcuts) as needed if you are using a version control system.
+2. **Code** (e.g., `src`, `analysis`)
+    - Same thing as the data folder: create subfolders as necessary
+3. **Output** (e.g., `output`, `plots`, `results`)&lt;sup&gt;1&lt;/sup&gt;
+    1. Things your script outputs that is not a dataset
+    2. `git` does not track empty folders, so put in a `README.md` or `.gitkeep` file
+4. **Functions** (e.g., `R`)
+5. **README** files
+
+Make sub-folders as needed, everything is in a project and/or has a fixed working directory.
+
+.footnote[[1] Can get weird in `git` with image conflicts. But works great on shared drives/dropbox!]
+
+---
+
+&lt;center&gt;
+&lt;div class="demo"&gt;Demo 03&lt;/div&gt;
+&lt;/center&gt;
+
+---
+
+# Can we do better? Of course.
+
+#### How long is my script?
+
+
+```bash
+wc 01-just_starting_out/analysis.R
+```
+
+```
+##  171  682 6348 01-just_starting_out/analysis.R
+```
+
+#### What does my script do?
+
+1. Loads
+2. Cleans
+3. Tidy
+4. Normalize
+5. EDA
+6. Model
+
+---
+
+# Split it up into separate scripts ... in a subfolder
+
+.pull-left[
+1. Loads
+2. Cleans
+3. Tidy
+4. Normalize
+5. EDA
+6. Model
+]
+
+.pull-right[
+1. `01-load.R`
+2. `02-01-clean.R`
+3. `02-02-tidy.R`
+4. `02-03-normalize.R`
+5. `03-eda.R`
+6. `04-model.R`
+]
+
+Be sensible, a 2 line script is probably not worth it, but a 2000 line script is unwieldy.
+
+---
+
+&lt;center&gt;
+&lt;div class="demo"&gt;Demo 04&lt;/div&gt;
+&lt;/center&gt;
+
+---
+
+# What else?
+
+[Rachael Tatman](http://www.rctatman.com/) (from [Kaggle](https://www.kaggle.com/)) [@rctatman](https://twitter.com/rctatman)
+
+- [R-Ladies](https://rladies.org/) organizer ([Seattle chapter](https://www.meetup.com/rladies-seattle/))
+- Data scientist at Kaggle
+- [RLadies DC Meetup](https://www.meetup.com/rladies-dc/): [Put together a data science portfolio](https://www.meetup.com/rladies-dc/events/254015586/)
+    - http://www.rctatman.com/files/Tatman_2018_DataSciencePortfolios_DC.pdf
+
+---
+
+&lt;center&gt;
+&lt;img src='figs/rctatman-show.png'&gt;&lt;/img&gt;
+&lt;/center&gt;
+
+---
+
+&lt;center&gt;
+&lt;img src='figs/rctatman-noshow.png'&gt;&lt;/img&gt;
+&lt;/center&gt;
+
+---
+
+# Knitr
+
+.pull-left[
+1. Loads
+2. Cleans
+3. Tidy
+4. Normalize
+5. EDA
+6. Model
+]
+
+.pull-right[
+1. `01-load.R`
+2. `02-01-clean.R`
+3. `02-02-tidy.R`
+4. `02-03-normalize.R`
+5. `03-eda.Rmd`
+6. `04-model.Rmd`
+]
+
+---
+
+# But...
+
+- Sometimes working with knitr in RStudio projects get weird because of working directories &lt;sub&gt;[1]&lt;/sub&gt;
+- I don't work in RStudio
+
+## Fix this with the `here` [package](https://here.r-lib.org/)
+
+- It's based off [rprojroot](https://rprojroot.r-lib.org/)
+
+In `here::here()`:
+- Is a file named .here present?
+- Is this an RStudio Project? Literally, can I find a file named something like foo.Rproj?
+- Is this an R package? Does it have a DESCRIPTION file?
+- Is this a remake project? Does it have a file named remake.yml?
+- Is this a projectile project? Does it have a file named .projectile?
+- Is this a checkout from a version control system? Does it have a directory named .git or .svn? - Currently, only Git and Subversion are supported.
+
+.footnote[[1] Also loses file tab completion within `Rmd` document. Worth?]
+---
+
+&lt;center&gt;
+&lt;div class="demo"&gt;Demo 05&lt;/div&gt;
+&lt;/center&gt;
+
+---
+
+# Functions
+
+Not shown in this example
+
+#### But...
+
+1. Put them in an `R` folder for easy reference and `source`ing.
+2. Get's the analysis project ready to turn into an [R package](http://r-pkgs.had.co.nz/)
+
+---
+
+# What about scholarship/formal reports (LaTeX)?
+
+1. Sibbling project
+
+
+```bash
+\begin{figure}[H]
+    \centering
+*   \includegraphics[width=.7\linewidth]{../06-make/output/billboard_rank_plots/avg_rank_by_week_across_months}
+\end{figure}
+```
+2. Child project ([git submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules)?)
+  - Symbolic links (i.e., shortcuts) could work too
+
+```bash
+ln -s ~/git/hub/rstatsdc_2018-structure/06-make .
+```
+
+
+```bash
+\begin{figure}[H]
+    \centering
+*   \includegraphics[width=.7\linewidth]{./06-make/output/billboard_rank_plots/avg_rank_by_week_across_months}
+\end{figure}
+```
+
+---
+
+# `knitr` button puts output in the source file location
+
+The output document is put in the `analysis` folder.
+I want it in the `output` folder!
+
+#### Solution
+
+use `rmarkdown::render()`
+
+
+```r
+# not executed during build
+rmarkdown::render(here::here('./analysis/billboard_eda/03-eda.Rmd'),
+*                 output_dir = './output/billboard_reports')
+```
+
+---
+
+# Too many commands to run!
+
+1. Shell Script
+2. Make
+3. RStudio &gt; Build (?)
+---
+
+# Makefile
+
+```make
+BILLBOARD=./analysis/billboard_eda/
+
+all : commands
+
+## commands      : show all commands.
+commands :
+	@grep -E '^##' Makefile | sed -e 's/## //g'
+
+## billboard_eda  : re-generate billboard eda analsyis
+billboard_eda :
+	Rscript ${BILLBOARD}/01*
+	Rscript ${BILLBOARD}/02-01*
+	Rscript ${BILLBOARD}/02-02*
+	Rscript ${BILLBOARD}/02-03*
+	Rscript -e "rmarkdown::render(here::here('./analysis/billboard_eda/03-eda.Rmd'), output_dir = './output/billboard_reports')"
+	Rscript -e "rmarkdown::render(here::here('./analysis/billboard_eda/04-model.Rmd'), output_dir = './output/billboard_reports')"
+
+## clean         : clean up junk files.
+clean :
+	find data/processed/ -type f -name '*.csv' | xargs rm
+	find analysis/ type f -name '*.html' | xargs rm
+```
+
+---
+
+&lt;center&gt;
+&lt;div class="demo"&gt;Demo 06&lt;/div&gt;
+&lt;/center&gt;
+
+---
+
+.pull-left[
+# In sum...
+
+1. Use R
+2. Make a project
+3. Organize the project into folders and use `here::here()` to get project relative paths
+4. Break up scripts into smaller pieces
+5. RMarkdown for things you want to show
+6. Put functions in `R` so your analysis is package ready and write `Makefiles`, shell scripts, or other build scripts and link your projects to scholarship so your figures and tables are always up to date
+]
+
+.pull-right[
+&lt;center&gt;
+&lt;img src='figs/expanding_brain.png' height='650px'&gt;&lt;/img&gt;
+&lt;/center&gt;
+]
+
+---
+
+# (More) Resources
+
+- slide template: [xaringan](https://github.com/yihui/xaringan) ([remark.js](https://github.com/gnab/remark))
+- [Jenny Bryan - Stop working directory insanity](https://gist.github.com/jennybc/362f52446fe1ebc4c49f)
+- [Jenny Bryan - Naming things](https://speakerdeck.com/jennybc/how-to-name-files)
+- [John Myles White - ProjectTemplate](http://projecttemplate.net/)
+- [John Blischak - workflowr: organized + reproducible + shareable data science in R](https://jdblischak.github.io/workflowr/)
+- [rr-init](https://github.com/Reproducible-Science-Curriculum/rr-init)
+- [Compuational Project  Cookie Cutter](https://github.com/chendaniely/computational-project-cookie-cutter)
+---
+
+.pull-left[
+
+# Thanks!
+
+[github](https://github.com/chendaniely)/[twitter](https://twitter.com/chendaniely)/[instagram](https://www.instagram.com/chendaniely/)/gmail: `@chendaniely`
+
+&lt;div class='halfLink'&gt;
+&lt;a href='https://github.com/chendaniely/rstatsdc_2018-structure'&gt;https://github.com/chendaniely/rstatsdc_2018-structure
+&lt;/a&gt;&lt;/div&gt;
+
+[#rdogladies](https://twitter.com/hashtag/rdogladies)
+
+[#hobbestheblueheelermix](https://www.instagram.com/explore/tags/hobbestheblueheelermix/)
+]
+
+.pull-right[
+&lt;center&gt;
+&lt;img src='./figs/hobbes.jpg' height='650px'&gt;&lt;/img&gt;
+&lt;/center&gt;
+]
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightLines": true,
+"ratio": "16:9",
+"highlightLanguage": "R"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function() {
+  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})();</script>
+
+<script>
+(function() {
+  var i, text, code, codes = document.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+})();
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

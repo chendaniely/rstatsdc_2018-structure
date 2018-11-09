@@ -18,6 +18,10 @@ div.hello {
 div.demo {
     font-size: 200px;
 }
+
+div.halfLink {
+    font-size: 18px;
+}
 </style>
 
 ```{r setup, include=FALSE}
@@ -59,15 +63,19 @@ knitr::opts_chunk$set(echo = TRUE)
 
 .pull-left[
 <center>
+<a href='https://www.youtube.com/watch?v=oPCIqDagGSk'>
 <b>2015</b>
 <img src='./figs/rstats_2015.png'></img>
+</a>
 </center>
 ]
 
 .pull-right[
 <center>
+<a href='https://www.youtube.com/watch?v=CAy0udiWwmg')
 <b>2016</b>
 <img src='./figs/rstats_2016.png'></img>
+</a>
 </center>
 ]
 
@@ -77,15 +85,19 @@ knitr::opts_chunk$set(echo = TRUE)
 
 .pull-left[
 <center>
+<a href='https://www.youtube.com/watch?v=CAy0udiWwmg'>
 <b>2017</b>
 <img src='./figs/rstats_2017.png'></img>
+</a>
 </center>
 ]
 
 .pull-right[
 <center>
+<a href='https://www.youtube.com/watch?v=6VO_CTtGlnk'>
 <b>2018</b>
 <img src='./figs/rstats_2018.png'></img>
+</a>
 </center>
 ]
 
@@ -121,9 +133,9 @@ It doesn't matter where you are in your learning path
 
 # Tidy Data Paper -- Billboard Dataset
 
-- Tidy data paper
+- [Tidy data paper](http://vita.had.co.nz/papers/tidy-data.html)
 - Billboard dataset
-- Github repository has "original" and "cleaned" data
+- [Github repository](https://github.com/hadley/tidy-data/tree/master/data) has "original" and "cleaned" data
 
 ---
 
@@ -296,7 +308,7 @@ TRUE
 
 #### but...
 
-- Emacs ESS allows you to pick the working directory
+- [Emacs ESS](https://ess.r-project.org/) allows you to pick the working directory
 - `cd` in linux changes the working directory
     - Run code from working directory
 
@@ -317,7 +329,6 @@ TRUE
 <center>
 <div class="demo">Demo 02</div>
 </center>
-
 
 ---
 
@@ -433,11 +444,11 @@ Be sensible, a 2 line script is probably not worth it, but a 2000 line script is
 
 # What else?
 
-Rachael Tatman (from Kaggle) @rctatman
+[Rachael Tatman](http://www.rctatman.com/) (from [Kaggle](https://www.kaggle.com/)) [@rctatman](https://twitter.com/rctatman)
 
-- R-Ladies organizer (Seattle chapter)
+- [R-Ladies](https://rladies.org/) organizer ([Seattle chapter](https://www.meetup.com/rladies-seattle/))
 - Data scientist at Kaggle
-- RLadies DC Meetup: Put together a data science portfolio
+- [RLadies DC Meetup](https://www.meetup.com/rladies-dc/): [Put together a data science portfolio](https://www.meetup.com/rladies-dc/events/254015586/)
     - http://www.rctatman.com/files/Tatman_2018_DataSciencePortfolios_DC.pdf
 
 ---
@@ -479,7 +490,7 @@ Rachael Tatman (from Kaggle) @rctatman
 # But...
 
 - Sometimes working with knitr in RStudio projects get weird because of working directories <sub>[1]</sub>
-- I won't work in RStudio
+- I don't work in RStudio
 
 ## Fix this with the `here` [package](https://here.r-lib.org/)
 
@@ -509,7 +520,7 @@ Not shown in this example
 #### But...
 
 1. Put them in an `R` folder for easy reference and `source`ing.
-2. Get's the analysis project ready to turn into an R package
+2. Get's the analysis project ready to turn into an [R package](http://r-pkgs.had.co.nz/)
 
 ---
 
@@ -523,7 +534,7 @@ Not shown in this example
     \includegraphics[width=.7\linewidth]{../06-make/output/billboard_rank_plots/avg_rank_by_week_across_months} #<<
 \end{figure}
 ```
-2. Child project (git submodules?)
+2. Child project ([git submodules](https://git-scm.com/book/en/v2/Git-Tools-Submodules)?)
   - Symbolic links (i.e., shortcuts) could work too
 
 ```bash
@@ -618,15 +629,32 @@ clean :
 
 # (More) Resources
 
-- slide template: xaringan (remark.js)
+- slide template: [xaringan](https://github.com/yihui/xaringan) ([remark.js](https://github.com/gnab/remark))
 - [Jenny Bryan - Stop working directory insanity](https://gist.github.com/jennybc/362f52446fe1ebc4c49f)
 - [Jenny Bryan - Naming things](https://speakerdeck.com/jennybc/how-to-name-files)
 - [John Myles White - ProjectTemplate](http://projecttemplate.net/)
 - [John Blischak - workflowr: organized + reproducible + shareable data science in R](https://jdblischak.github.io/workflowr/)
+- [rr-init](https://github.com/Reproducible-Science-Curriculum/rr-init)
+- [Compuational Project  Cookie Cutter](https://github.com/chendaniely/computational-project-cookie-cutter)
 ---
+
+.pull-left[
 
 # Thanks!
 
-github/twitter/gmail/instagram: `@chendaniely`
+[github](https://github.com/chendaniely)/[twitter](https://twitter.com/chendaniely)/[instagram](https://www.instagram.com/chendaniely/)/gmail: `@chendaniely`
 
-Slides/code/repo: https://github.com/chendaniely/rstatsdc_2018-structure
+<div class='halfLink'>
+<a href='https://github.com/chendaniely/rstatsdc_2018-structure'>https://github.com/chendaniely/rstatsdc_2018-structure
+</a></div>
+
+[#rdogladies](https://twitter.com/hashtag/rdogladies)
+
+[#hobbestheblueheelermix](https://www.instagram.com/explore/tags/hobbestheblueheelermix/)
+]
+
+.pull-right[
+<center>
+<img src='./figs/hobbes.jpg' height='650px'></img>
+</center>
+]
