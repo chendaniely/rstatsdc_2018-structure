@@ -4,6 +4,7 @@ subtitle: "https://github.com/chendaniely/rstatsdc_2018-structure"
 author: Daniel Chen (@chendaniely)
 output:
   xaringan::moon_reader:
+    self_contained: true
     nature:
       highlightLines: true
       ratio: '16:9'
